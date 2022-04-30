@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iIi",
+    "IiI",
+    "iIi"
+  ],
+  "key": {
+    "I": {
+      "item": "forge:gems/amethyst"
+    },
+    "i": {
+      "tag": "forge:stone"
+    }
+  },
+  "result": {
+    "item": "jillingots:amethyst_ore"
+  }
+}
