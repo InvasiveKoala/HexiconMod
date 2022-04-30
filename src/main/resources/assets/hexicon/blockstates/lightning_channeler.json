@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model":  "hexicon:block/lightning_channeler" }
+  }
+}

@@ -11,11 +11,11 @@ buildscript {
 
 apply plugin: 'net.minecraftforge.gradle'
 
-group = 'me.ddtincoming.jillingots'
+group = 'me.ddtincoming.hexicon'
 version = '1.16.5-1.0'
 
 java {
-    archivesBaseName = 'jillingots'
+    archivesBaseName = 'hexicon'
     toolchain.languageVersion = JavaLanguageVersion.of(8)
 }
 
@@ -54,7 +54,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                jillingots {
+                hexicon {
                     source sourceSets.main
                 }
             }
@@ -76,7 +76,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                jillingots {
+                hexicon {
                     source sourceSets.main
                 }
             }
@@ -98,10 +98,10 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', 'jillingots', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'hexicon', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
-                jillingots {
+                hexicon {
                     source sourceSets.main
                 }
             }
@@ -145,12 +145,12 @@ dependencies {
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "jillingots",
-                //"Specification-Vendor": "jillingots authors",
+                "Specification-Title"     : "hexicon",
+                //"Specification-Vendor": "hexicon authors",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
-                //"Implementation-Vendor": "jillingots authors",
+                //"Implementation-Vendor": "hexicon authors",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }

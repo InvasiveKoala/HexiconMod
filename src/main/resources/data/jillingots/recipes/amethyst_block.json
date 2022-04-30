@@ -7,10 +7,10 @@
   ],
   "key": {
     "I": {
-      "item": "jillingots:amethyst"
+      "item": "hexicon:amethyst"
     }
   },
   "result": {
-    "item": "jillingots:amethyst_block"
+    "item": "hexicon:amethyst_block"
   }
 }

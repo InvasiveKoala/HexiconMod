@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/stairs",
-  "textures": {
-    "bottom": "jillingots:block/amethyst_block",
-    "top": "jillingots:block/amethyst_block",
-    "side": "jillingots:block/amethyst_block"
-  }
-}
