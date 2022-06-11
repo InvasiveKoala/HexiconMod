@@ -7,6 +7,8 @@ import me.vexinglemons.hexicon.capabilities.PlayerData.IPlayerData;
 import me.vexinglemons.hexicon.capabilities.PlayerData.PlayerDataProvider;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.TickEvent;
@@ -97,7 +99,6 @@ public class Spellbook
             float ticks = player.getTicks();
             if (ticks > 0.0f)
             {
-                System.out.println("hi");
                 player.setTicks(ticks - 1.0f);
                 return;
             }
@@ -105,7 +106,6 @@ public class Spellbook
             {
                 String spellString = player.getSpellString();
                 player.setSpellString("");
-                System.out.println("something");
                 doSpellsInBook(event.player, spellString);
             }
         });

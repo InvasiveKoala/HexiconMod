@@ -5,7 +5,7 @@ import java.util.UUID;
 public class MobDataFactory implements IMobData {
 
     private boolean gen = false;
-    private UUID charmer = null;
+    private UUID charmer = UUID.randomUUID();
     public MobDataFactory() {
     }
 
@@ -18,12 +18,10 @@ public class MobDataFactory implements IMobData {
     public UUID getCharmer() {return charmer;}
 
 
-
     @Override
     public void setGen(boolean amount) {this.gen = amount;}
 
     @Override
     public void setCharmer(UUID charmer) {this.charmer = charmer;}
-
 
 }

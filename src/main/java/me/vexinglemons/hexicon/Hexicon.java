@@ -15,6 +15,7 @@ import me.vexinglemons.hexicon.entities.ModEntityTypes;
 import me.vexinglemons.hexicon.item.ModItems;
 import me.vexinglemons.hexicon.item.custom.WaterstoneTick;
 import me.vexinglemons.hexicon.item.custom.spells.SayingSpells;
+import me.vexinglemons.hexicon.item.custom.spells.SpellSpecificEvents.Control;
 import me.vexinglemons.hexicon.item.custom.spells.Spellbook;
 import me.vexinglemons.hexicon.screen.LightningChannelerScreen;
 import me.vexinglemons.hexicon.tileentity.ModTileEntities;
@@ -58,6 +59,7 @@ public class Hexicon {
         forgeEventBus.register(new WaterstoneTick());
         forgeEventBus.register(new SayingSpells());
         forgeEventBus.register(new Spellbook());
+        forgeEventBus.register(new Control());
         eventBus.addListener(this::setup);
         // Register the enqueueIMC method for modloading
         eventBus.addListener(this::enqueueIMC);

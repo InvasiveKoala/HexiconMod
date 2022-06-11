@@ -17,6 +17,7 @@ public class PlayerDataStorage implements Capability.IStorage<IPlayerData> {
         tag.putBoolean("Strength", instance.getInOrb());
         tag.putInt("Intelligence", instance.getIntelligence());
         tag.putString("SpellString", instance.getSpellString());
+        tag.putInt("Mana", instance.getMana());
         return tag;
     }
 
@@ -27,5 +28,6 @@ public class PlayerDataStorage implements Capability.IStorage<IPlayerData> {
         instance.setInOrb(tag.getBoolean("Strength"));
         instance.setIntelligence(tag.getInt("Intelligence"));
         instance.setSpellString(tag.getString("SpellString"));
+        instance.setMana(tag.getInt("Mana"));
     }
 }

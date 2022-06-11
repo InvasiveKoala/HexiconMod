@@ -8,6 +8,7 @@ public class PlayerDataFactory implements IPlayerData{
     private boolean isInOrb = false;
     private int intelligence = 0;
     private String spellString = "";
+    private int mana = 0;
 
     public PlayerDataFactory() {
     }
@@ -38,6 +39,11 @@ public class PlayerDataFactory implements IPlayerData{
     @Override
     public String getSpellString() {return this.spellString;}
 
+    @Override
+    public void setMana(int mana) {this.mana = mana;}
+
+    @Override
+    public int getMana() {return this.mana;}
     @Override
     public void setInOrb(boolean amount) {this.isInOrb = amount;}
 

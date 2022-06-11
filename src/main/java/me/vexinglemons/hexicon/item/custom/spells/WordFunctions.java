@@ -2,18 +2,23 @@ package me.vexinglemons.hexicon.item.custom.spells;
 
 import me.vexinglemons.hexicon.capabilities.MobData.IMobData;
 import me.vexinglemons.hexicon.capabilities.MobData.MobDataProvider;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.block.AirBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.*;
 import net.minecraft.entity.item.EnderPearlEntity;
+import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.event.world.NoteBlockEvent;
 
 import static me.vexinglemons.hexicon.item.custom.spells.GlobalWordFunctions.checkDirectionValidity;
 
@@ -168,16 +173,40 @@ public class WordFunctions {
 
     public static void control(Entity target, PlayerEntity caster) //The actual code for charmed things following your command is in a separate class
     {
-        if (!(target instanceof LivingEntity))
+        if (!(target instanceof MobEntity))
         {
             caster.sendStatusMessage(ITextComponent.getTextComponentOrEmpty
-                    ("The entity must be alive to charm it."), true);
+                    ("The entity must be a mob to charm it."), true);
+            return;
+        }
+        else if(((MobEntity) target).getMaxHealth() > 100)
+        {
+            caster.sendStatusMessage(ITextComponent.getTextComponentOrEmpty
+                    ("This mob is too powerful to control!"), true);
             return;
         }
         LazyOptional<IMobData> entitything = target.getCapability(MobDataProvider.capability,null);
         entitything.ifPresent(entity ->
         {
+            if (entity.getCharmer() != null && entity.getCharmer().equals(caster.getUniqueID())) {
+                caster.sendStatusMessage(ITextComponent.getTextComponentOrEmpty
+                        ("This mob has already been charmed by you!"), true);
+                return;
+            }
+
+            ServerWorld world = (ServerWorld) target.getEntityWorld();
+            world.spawnParticle(ParticleTypes.HEART, target.getPosX(), target.getPosY() + 1.0, target.getPosZ(), 5, 1.0, 0.0, 1.0, 0.0);
             entity.setCharmer(caster.getUniqueID());
+            ((MobEntity) target).setAttackTarget(caster.getLastAttackedEntity());
+            if (target instanceof TameableEntity)
+            {
+                ((TameableEntity) target).setOwnerId(caster.getUniqueID()); // Steal people's dogs
+                ((TameableEntity) target).setTamed(true);
+            }
+            else if (target instanceof AbstractHorseEntity) // Tame horses
+            {
+                ((AbstractHorseEntity) target).setTamedBy(caster);
+            }
         });
     }
 }
