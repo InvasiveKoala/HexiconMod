@@ -1,4 +1,4 @@
-package me.vexinglemons.hexicon.item.custom.spells;
+package me.vexinglemons.hexicon.spells.SpellSpecificEvents;
 
 import me.vexinglemons.hexicon.Hexicon;
 import me.vexinglemons.hexicon.capabilities.MobData.IMobData;

@@ -10,13 +10,13 @@ import me.vexinglemons.hexicon.capabilities.MobData.MobDataStorage;
 import me.vexinglemons.hexicon.capabilities.PlayerData.IPlayerData;
 import me.vexinglemons.hexicon.capabilities.PlayerData.PlayerDataFactory;
 import me.vexinglemons.hexicon.capabilities.PlayerData.PlayerDataStorage;
+import me.vexinglemons.hexicon.config.config;
 import me.vexinglemons.hexicon.container.ModContainers;
 import me.vexinglemons.hexicon.entities.ModEntityTypes;
 import me.vexinglemons.hexicon.item.ModItems;
 import me.vexinglemons.hexicon.item.custom.WaterstoneTick;
-import me.vexinglemons.hexicon.item.custom.spells.SayingSpells;
-import me.vexinglemons.hexicon.item.custom.spells.SpellSpecificEvents.Control;
-import me.vexinglemons.hexicon.item.custom.spells.Spellbook;
+import me.vexinglemons.hexicon.spells.*;
+import me.vexinglemons.hexicon.spells.SpellSpecificEvents.Control;
 import me.vexinglemons.hexicon.screen.LightningChannelerScreen;
 import me.vexinglemons.hexicon.tileentity.ModTileEntities;
 import net.minecraft.block.Block;
@@ -28,7 +28,9 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
@@ -60,6 +62,12 @@ public class Hexicon {
         forgeEventBus.register(new SayingSpells());
         forgeEventBus.register(new Spellbook());
         forgeEventBus.register(new Control());
+        forgeEventBus.register(new Words());
+        forgeEventBus.register(new CopyPlayerData());
+        forgeEventBus.register(new AcquireMana());
+
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, config.COMMON_SPEC);
+
         eventBus.addListener(this::setup);
         // Register the enqueueIMC method for modloading
         eventBus.addListener(this::enqueueIMC);

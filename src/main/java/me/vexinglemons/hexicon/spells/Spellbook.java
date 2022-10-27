@@ -1,4 +1,4 @@
-package me.vexinglemons.hexicon.item.custom.spells;
+package me.vexinglemons.hexicon.spells;
 
 
 import me.vexinglemons.hexicon.capabilities.BookData.BookDataProvider;
@@ -7,8 +7,6 @@ import me.vexinglemons.hexicon.capabilities.PlayerData.IPlayerData;
 import me.vexinglemons.hexicon.capabilities.PlayerData.PlayerDataProvider;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.TickEvent;
@@ -16,8 +14,9 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+
 import static java.lang.Math.round;
-import static me.vexinglemons.hexicon.item.custom.spells.Words.spell;
+import static me.vexinglemons.hexicon.spells.Words.spell;
 
 public class Spellbook
 {
@@ -57,7 +56,10 @@ public class Spellbook
                 });
                 break;
             }
-            spell(lines[lineNum], player, lineNum + 1);
+            boolean succeded = spell(lines[lineNum], player, lineNum + 1);
+            if (!succeded) {
+                return;
+            }
         }
     }
 

@@ -1,0 +1,27 @@
+{
+  "name": "Intro to Hexicon",
+  "icon": "minecraft:writable_book",
+  "category": "hexicon:intro",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Magic is wild energy. Using it in its raw form has dangerous consequences, so naturally, people needed a way to harness it. They found that using words from an ancient language called Hexish allowed them to use this magic in a predictable way."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "To use magic, you need to learn words in Hexish. Most sentences have a verb, an object (what thing you are targeting), and adverbs that are usually optional. You can use adjectives to specify which entity exactly you are targeting. Learn more about sentence structure <THING>here."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Here’s an example sentence: $(br2) Oriri valde proxima lupus"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "“Oriri” means to raise or rise. “Valde” means “very”. “Proxima” means nearest, and “lupus” means dog. The sentence means “Raise very nearest dog” literally, but it has a different inferred meaning. Using “very” with most verbs enhances their effect, so it is making the dog get raised higher. These sentences are also not direct translations and wouldn’t make grammatical sense in English. The sentence actually means “raise the nearest dog”."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Obviously, using magic does not come without a cost. You need mana to be able to actually do anything. When you kill a mob, half of the experience is absorbed into your body and converted into mana at a 1:2 ratio. Learn more about mana <THING>here."
+    }
+  ]
+}

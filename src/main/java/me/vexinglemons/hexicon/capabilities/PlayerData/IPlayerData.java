@@ -1,12 +1,14 @@
 package me.vexinglemons.hexicon.capabilities.PlayerData;
 
 
+
 public interface IPlayerData {
 
     float getTicks();
     void setTicks(float amount);
     void setSpellString(String spell);
     void setMana(int mana);
+    void removeMana(int mana);
 
     boolean getInOrb();
     int getIntelligence();

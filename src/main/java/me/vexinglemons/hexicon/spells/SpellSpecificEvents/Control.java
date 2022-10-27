@@ -1,11 +1,9 @@
-package me.vexinglemons.hexicon.item.custom.spells.SpellSpecificEvents;
+package me.vexinglemons.hexicon.spells.SpellSpecificEvents;
 
 import me.vexinglemons.hexicon.capabilities.MobData.IMobData;
 import me.vexinglemons.hexicon.capabilities.MobData.MobDataProvider;
-import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;

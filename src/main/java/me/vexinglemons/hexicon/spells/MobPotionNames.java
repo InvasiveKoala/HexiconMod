@@ -1,10 +1,8 @@
-package me.vexinglemons.hexicon.item.custom.spells;
+package me.vexinglemons.hexicon.spells;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.Effects;
-
-import static me.vexinglemons.hexicon.util.Methods.findIndex;
 
 public class MobPotionNames {
 
@@ -14,7 +12,7 @@ public class MobPotionNames {
     EntityType.LLAMA, EntityType.MOOSHROOM, EntityType.MULE, EntityType.PARROT, EntityType.TNT, EntityType.TRIDENT};
 
     public static EntityType translate(String latin){
-        int index = findIndex(Words.mobs, latin);
+        int index = Words.mobs.indexOf(latin);
         if (index == -1)
         {
             return null;

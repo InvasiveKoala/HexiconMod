@@ -53,6 +53,9 @@ minecraft {
             // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
             property 'forge.logging.console.level', 'debug'
 
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+
             mods {
                 hexicon {
                     source sourceSets.main
@@ -120,6 +123,7 @@ repositories {
     // flatDir {
     //     dir 'libs'
     // }
+    maven { url = "https://maven.blamejared.com" }
 }
 
 dependencies {
@@ -128,6 +132,9 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.30'
 
+
+    compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-53:api")
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-53")
     // Real mod deobf dependency examples - these get remapped to your current mappings
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency
     // runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}") // Adds the full JEI mod as a runtime dependency

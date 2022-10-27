@@ -13,5 +13,4 @@ public class ModItemGroup {
             return new ItemStack(ModItems.SUSSY.get());
         }
     };
-
 }

@@ -41,6 +41,8 @@ public class PlayerDataFactory implements IPlayerData{
 
     @Override
     public void setMana(int mana) {this.mana = mana;}
+    @Override
+    public void removeMana(int mana) {this.mana -= mana;}
 
     @Override
     public int getMana() {return this.mana;}

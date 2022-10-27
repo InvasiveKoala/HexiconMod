@@ -1,10 +1,8 @@
-package me.vexinglemons.hexicon.item.custom.spells;
+package me.vexinglemons.hexicon.spells;
 
 import me.vexinglemons.hexicon.capabilities.MobData.IMobData;
 import me.vexinglemons.hexicon.capabilities.MobData.MobDataProvider;
-import net.minecraft.block.AirBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.item.EnderPearlEntity;
 import net.minecraft.entity.passive.TameableEntity;
@@ -15,16 +13,19 @@ import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.event.world.NoteBlockEvent;
 
-import static me.vexinglemons.hexicon.item.custom.spells.GlobalWordFunctions.checkDirectionValidity;
+import java.util.ArrayList;
+
+import static me.vexinglemons.hexicon.spells.GlobalWordFunctions.checkDirectionValidity;
 
 public class WordFunctions {
 
-    public static void gen(EntityType entityToSpawn, PlayerEntity caster, int wordNumber, int[] advmodifiers, int lineNumber)
+    public static void gen(EntityType entityToSpawn, PlayerEntity caster, int wordNumber, ArrayList<Integer> advmodifiers, int lineNumber)
     {
         if (entityToSpawn == null)
         {
@@ -61,31 +62,28 @@ public class WordFunctions {
     public static void attachGen(Entity entity)
     {
         LazyOptional<IMobData> entitything = entity.getCapability(MobDataProvider.capability,null);
-        entitything.ifPresent((theEntity) -> {
-            theEntity.setGen(true);
-        });
+        entitything.ifPresent((theEntity) -> theEntity.setGen(true));
     }
 
-    public static void rise(Entity target, int[] modifiers)
+    public static void rise(Entity target, ArrayList<Integer> advmodifiers)
     {
         target.velocityChanged = true;
-        double modifier = (double) modifiers[0]/2;
+        double modifier = (double) advmodifiers.get(0)/2;
         double ymotion = target.getMotion().y + (0.1 + (modifier));
         target.setVelocity(target.getMotion().x,ymotion,target.getMotion().z);
     }
 
-    public static void fall(Entity target, int[] modifiers)
+    public static void fall(Entity target, ArrayList<Integer> advmodifiers)
     {
-        System.out.println("hi");
         target.velocityChanged = true;
-        double ymotion = target.getMotion().y - (2.5 * modifiers[0]);
+        double ymotion = target.getMotion().y - (2.5 * advmodifiers.get(0));
         target.setVelocity(target.getMotion().x,ymotion,target.getMotion().z);
     }
 
-    public static void transform(Entity target, int[] modifiers) {
+    public static void transform(Entity target, ArrayList<Integer> advmodifiers) {
         int i = -1;
         LivingEntity livingtarget = (LivingEntity) target;
-        for (int level : modifiers)
+        for (int level : advmodifiers)
         {
             i++;
             if (level == 1)
@@ -93,15 +91,15 @@ public class WordFunctions {
                 continue;
             }
             Effect effect = MobPotionNames.returnPotionType(i);
-            livingtarget.addPotionEffect(new EffectInstance(effect, 1200 * level, 0));
+            livingtarget.addPotionEffect(new EffectInstance(effect, 1200 * (level - 1), 0));
         }
     }
 
-    public static void cleanse(Entity target, int[] modifiers)
+    public static void cleanse(Entity target, ArrayList<Integer> advmodifiers)
     {
         int i = -1;
         LivingEntity livingtarget = (LivingEntity) target;
-        for (int level : modifiers)
+        for (int level : advmodifiers)
         {
             i++;
             if (level == 1)
@@ -113,9 +111,9 @@ public class WordFunctions {
         }
     }
 
-    public static void push(PlayerEntity caster, Entity target, int[] modifiers)
+    public static void push(PlayerEntity caster, Entity target, ArrayList<Integer> advmodifiers)
     {
-        int validity = checkDirectionValidity(modifiers);
+        int validity = checkDirectionValidity(advmodifiers);
         if (validity == 1)
         {
             caster.sendStatusMessage(ITextComponent.getTextComponentOrEmpty
@@ -130,29 +128,29 @@ public class WordFunctions {
         }
         double xmotion = 0;
         double zmotion = 0;
-        if (modifiers[1] > 1)
+        if (advmodifiers.get(2) > 1) // Deincepsme (player's forward)
         {
             xmotion = caster.getLookVec().x;
             zmotion = caster.getLookVec().z;
         }
-        else if (modifiers[2] > 1)
+        else if (advmodifiers.get(4) > 1) // Deinceps (Object's forward)
         {
             xmotion = target.getLookVec().x;
             zmotion = target.getLookVec().z;
         }
-        else if (modifiers[3] > 1)
+        else if (advmodifiers.get(1) > 1) // Retrome (Player's backward)
         {
             xmotion = caster.getLookVec().x * -1;
             zmotion = caster.getLookVec().z * -1;
         }
-        else if (modifiers[4] > 1)
+        else if (advmodifiers.get(3) > 1) //Retro (Object's backward)
         {
             xmotion = target.getLookVec().x * -1;
             zmotion = target.getLookVec().z * -1;
         }
 
         target.velocityChanged = true;
-        target.setVelocity(xmotion * modifiers[0],target.getMotion().y,zmotion * modifiers[0]);
+        target.setVelocity(xmotion * advmodifiers.get(0),target.getMotion().y,zmotion * advmodifiers.get(0));
     }
 
     public static void lightning(Entity target)
@@ -160,15 +158,29 @@ public class WordFunctions {
         EntityType.LIGHTNING_BOLT.spawn((ServerWorld) target.getEntityWorld(), null, null, target.getPosition(), SpawnReason.SPAWN_EGG, true, false);
     }
 
-    public static void ignite(Entity target, int[] modifiers)
+    public static void ignite(Entity target, ArrayList<Integer> modifiers)
     {
-        target.setFire(modifiers[0] * 4);
+        target.setFire(modifiers.get(0) * 4);
     }
 
-    public static void pull(Entity target, int[] modifiers, PlayerEntity caster)
+    public static void pull(Entity target, ArrayList<Integer> modifiers, PlayerEntity caster)
     {
+        double vecX;
+        double vecY;
+        double vecZ;
         Vector3d vector = caster.getPositionVec().subtract(target.getPositionVec()).normalize();
-        target.setVelocity(vector.getX() * modifiers[0], vector.getY() * modifiers[0], vector.getZ() * modifiers[0]);
+        if (modifiers.get(1) > 1)
+        {
+            vecX = vector.getX() * -1;
+            vecY = vector.getY() * -1;
+            vecZ = vector.getZ() * -1;
+        }
+        else{
+            vecX = vector.getX();
+            vecY = vector.getY();
+            vecZ = vector.getZ();
+        }
+        target.setVelocity(vecX * modifiers.get(0), vecY * modifiers.get(0), vecZ * modifiers.get(0));
     }
 
     public static void control(Entity target, PlayerEntity caster) //The actual code for charmed things following your command is in a separate class
@@ -208,5 +220,13 @@ public class WordFunctions {
                 ((AbstractHorseEntity) target).setTamedBy(caster);
             }
         });
+    }
+    public static void classify(BlockPos targetBlock, PlayerEntity caster)
+    {
+        BlockState block = caster.getEntityWorld().getBlockState(targetBlock);
+        IFormattableTextComponent text = block.getBlock().getTranslatedName();
+        StringTextComponent text2 = new StringTextComponent(block.getBlock().getTranslatedName().getString() + " at x: " + targetBlock.getX() + " y: " + targetBlock.getY() + " z: " + targetBlock.getZ());
+        caster.sendMessage(text2, caster.getUniqueID());
+
     }
 }
